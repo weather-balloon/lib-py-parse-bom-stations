@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+
+""" Grabs a copy of the BOM station data """
+
+import sys
+from pathlib import Path
+import tempfile
+from zipfile import ZipFile
+from urllib.request import urlretrieve
+
+TMP_DIR = Path(tempfile.gettempdir(), "bomdata")
+STATION_DOWNLOAD_FILE = Path(TMP_DIR, "bomstations.zip")
+STATION_OUT_FILE = Path(TMP_DIR, "bomstations.txt")
+
+
+def fetch(station_url: str = 'ftp://ftp.bom.gov.au/anon2/home/ncc/metadata/sitelists/stations.zip',
+          station_download_file: str = STATION_DOWNLOAD_FILE,
+          station_out_file: str = STATION_OUT_FILE):
+    """ Checks to see if the station data exists and loads it if not found """
+
+    print('Station data will be stored in: {}'.format(station_out_file))
+    station_out_path = Path(station_out_file)
+
+    if station_out_path.exists():
+        print('Data already exists in {}'.format(station_out_path))
+    else:
+        print('Downloading data')
+        for f in [station_download_file, station_out_file]:
+            path = Path(f)
+            path.parent.mkdir(parents=True, exist_ok=True)
+
+        urlretrieve(station_url, station_download_file)
+
+        with ZipFile(station_download_file) as station_zip:
+            with open(station_out_file, 'wb') as stations_file:
+                stations_file.write(station_zip.read('stations.txt'))
+
+    return station_out_path
+
+
+if __name__ == '__main__':
+    fetch(station_download_file=sys.argv[1],
+          station_out_file=sys.argv[2])

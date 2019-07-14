@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+autopep8 = "*"
+pylint = "*"
+setuptools = "*"
+wheel = "*"
+pytest = "*"
+pytest-cov = "*"
+twine = "*"
+pytest-datafiles = "*"
+tox = "*"
+
+[packages]
+pandas = "*"
+
+[requires]
+python_version = "3.6"

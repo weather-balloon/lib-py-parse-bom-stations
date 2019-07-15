@@ -6,6 +6,10 @@ steps:
   inputs:
     versionSpec: '3.6'
 
+- task: PipAuthenticate@0
+  inputs:
+    artifactFeeds: wb-artifacts
+
 - script: make init
 
 - script: make test

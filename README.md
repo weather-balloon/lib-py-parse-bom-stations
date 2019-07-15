@@ -1,5 +1,7 @@
 # lib-py-parse-bom-stations
 
+[![Build Status](https://dev.azure.com/weatherballoon/Weather%20Balloon/_apis/build/status/weather-balloon.lib-py-parse-bom-stations?branchName=master)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_build/latest?definitionId=10&branchName=master)
+
 Parses [weather stations published by the Bureau of Meteorology](ftp://ftp.bom.gov.au/anon2/home/ncc/metadata/sitelists/stations.zip).
 
 ```

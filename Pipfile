@@ -13,6 +13,7 @@ pytest-cov = "*"
 twine = "*"
 pytest-datafiles = "*"
 tox = "*"
+versioneer = "*"
 
 [packages]
 pandas = "*"

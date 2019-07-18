@@ -17,6 +17,9 @@ init:
 	/usr/bin/env python3 -m pip install pipenv --upgrade
 	pipenv install --dev
 
+sync:
+	pipenv sync
+
 check:
 	pipenv check
 
@@ -26,8 +29,10 @@ lint:
 fetch-data:
 	bin/fetch_bom_stations $(STATION_DOWNLOAD_FILE) $(STATION_OUT_FILE)
 
-test: fetch-data
+test: fetch-data sync
 	pipenv run tox
+
+pre-commit: lint check test 
 
 package: clean lint check test
 	pipenv run python setup.py sdist bdist_wheel
@@ -36,7 +41,6 @@ publish: package
 	pipenv run twine upload dist/*
 
 clean:
-	pipenv clean
 	rm -rf build dist .egg .eggs *.egg-info pip-wheel-metadata
 	rm -f $(STATION_DOWNLOAD_FILE)
 	rm -f $(STATION_OUT_FILE)

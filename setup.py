@@ -1,7 +1,9 @@
+""" Standard packaging setup """
+# pylint: disable-all
 
 import os
-import sys
 from setuptools import setup
+import versioneer
 
 PACKAGE_NAME = 'parse_bom_stations'
 
@@ -18,19 +20,10 @@ install_requires = [
     "pandas>=0.24"
 ]
 
-setup_requires = [
-
-]
-
-tests_requires = [
-    'pytest-cov>=2.6',
-    'pytest>=4.2',
-    'pytest-datafiles==2.0'
-]
-
 setup(
     name=about['NAME'],
-    version=about['VERSION'],
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     description=about['__doc__'],
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -41,7 +34,5 @@ setup(
     packages=[about['NAME']],
     python_requires='>=3.6',
     install_requires=install_requires,
-    setup_requires=setup_requires,
-    tests_requires=tests_requires,
     classifiers=about['CLASSIFIERS']
 )

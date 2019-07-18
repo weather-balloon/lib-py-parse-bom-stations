@@ -17,7 +17,10 @@ init:
 	/usr/bin/env python3 -m pip install pipenv --upgrade
 	pipenv install --dev
 
-sync:
+install-dev:
+	pipenv install --dev
+
+sync: install-dev
 	pipenv sync
 
 check:
@@ -32,9 +35,9 @@ fetch-data:
 test: fetch-data sync
 	pipenv run tox
 
-pre-commit: lint check test 
+pre-commit: package
 
-package: clean lint check test
+package: clean lint test
 	pipenv run python setup.py sdist bdist_wheel
 
 publish: package
@@ -42,8 +45,16 @@ publish: package
 
 clean:
 	rm -rf build dist .egg .eggs *.egg-info pip-wheel-metadata
+	rm -rf htmlcov junit
+	rm -f coverage.xml
+	rm -f .coverage
+
+clean-test-data:
 	rm -f $(STATION_DOWNLOAD_FILE)
 	rm -f $(STATION_OUT_FILE)
+	rm -rf .pytest_cache
 
-#clean-tox:
-#	rm -rf .tox
+clean-tox:
+	rm -rf .tox
+
+clean-all: clean clean-test-data clean-tox

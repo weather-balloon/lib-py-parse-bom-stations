@@ -1,7 +1,6 @@
 """ Package details """
 
 NAME = 'parse_bom_stations'
-VERSION = '0.1.0'
 AUTHOR = 'Duncan Dickinson'
 AUTHOR_EMAIL = 'duncan@dickinson.name'
 LICENCE = 'BSD 2-Clause'

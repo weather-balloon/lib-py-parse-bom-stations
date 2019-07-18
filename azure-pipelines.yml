@@ -19,3 +19,9 @@ steps:
   inputs:
     testResultsFiles: '**/test-*.xml'
     testRunTitle: 'Publish test results for Python $(python.version)'
+
+- task: TwineAuthenticate@0
+  inputs:
+    artifactFeeds: wb-artifacts
+
+- script: 'twine -r wb-artifacts parse_bom_stations'

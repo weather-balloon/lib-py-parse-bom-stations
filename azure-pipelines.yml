@@ -6,9 +6,10 @@ steps:
   inputs:
     versionSpec: '3.6'
 
-- task: PipAuthenticate@0
-  inputs:
-    artifactFeeds: wb-artifacts
+# Would like to use this in the future and proxy through wb-artifacts for everything
+# - task: PipAuthenticate@0
+#  inputs:
+#    artifactFeeds: wb-artifacts
 
 - script: make init
 
@@ -24,4 +25,4 @@ steps:
   inputs:
     artifactFeeds: wb-artifacts
 
-- script: 'twine -r wb-artifacts parse_bom_stations'
+- script: 'pipenv run twine -r wb-artifacts dist/*'

@@ -44,4 +44,4 @@ steps:
     displayName: Publish to $(publish_repo)
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     inputs:
-        script: pipenv run twine -r $(publish_repo) dist/*
+        script: pipenv run twine upload -r $(publish_repo) dist/*

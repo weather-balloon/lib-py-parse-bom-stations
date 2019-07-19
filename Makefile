@@ -17,9 +17,6 @@ init:
 	/usr/bin/env python3 -m pip install pipenv --upgrade
 	pipenv install --dev
 
-sync: 
-	pipenv sync
-
 check:
 	pipenv check
 
@@ -29,10 +26,10 @@ lint:
 fetch-data:
 	bin/fetch_bom_stations $(STATION_DOWNLOAD_FILE) $(STATION_OUT_FILE)
 
-test: sync lint fetch-data test
+test: fetch-data
 	pipenv run tox
 
-pre-commit: test	
+pre-commit: lint test	
 
 package: 
 	pipenv run python setup.py sdist bdist_wheel

@@ -27,7 +27,7 @@ jobs:
       - task: CmdLine@2
         displayName: Run tests
         inputs:
-            script: make test
+            script: make pre-commit
 
       - task: PublishTestResults@2
         displayName: Publish tests

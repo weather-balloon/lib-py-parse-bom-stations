@@ -30,3 +30,15 @@ Please note Copyright, Disclaimer and Privacy Notice, accessible at <http://www.
 
 ## Set up
 
+You may notice a delay when you `git commit` - this is due to a commit hook (`.git/hooks/pre-commit`)
+that checks your code prior to allowing you to commit. You can skip this check if you really need to
+by using the `--no-verify` parameter with your `git commit`.
+
+If you need to skip the Azure Pipelines CI build, 
+
+   git commit -m '[skip ci] Pipeline work' --no-verify
+
+The 
+
+   git tag 0.1.7
+   git push --tags

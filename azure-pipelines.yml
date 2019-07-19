@@ -51,10 +51,15 @@ jobs:
         inputs:
             artifact: dist
 
-      - task: CmdLine@2
-        displayName: Install twine
+      - task: UsePythonVersion@0
+        displayName: Set Python version to $(python_version)
         inputs:
-            script: pip install --upgrade twine
+            versionSpec: "$(python_version)"
+
+      - task: CmdLine@2
+        displayName: Prepare virtualenv
+        inputs:
+            script: make init
 
       - task: TwineAuthenticate@0
         displayName: Authenticate with $(publish_repo) repo
@@ -64,4 +69,4 @@ jobs:
       - task: CmdLine@2
         displayName: Publish to $(publish_repo)
         inputs:
-            script: twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip
+            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip

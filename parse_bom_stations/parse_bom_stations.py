@@ -79,10 +79,9 @@ def parse_station_list_to_csv(filepath_or_buffer):
     return parse_station_list(filepath_or_buffer).to_csv()
 
 
-def cli(*args):
+def cli(args):
     """ A very basic command line """
-
-    if args[1] in ['-h', '--help']:
+    if len(args) >= 2 and args[1] in ['-h', '--help']:
         print(f'Usage: {args[0]} INPUT_FILE [csv]')
         exit(0)
 

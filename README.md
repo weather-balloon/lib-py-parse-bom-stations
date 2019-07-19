@@ -1,8 +1,30 @@
 # lib-py-parse-bom-stations
 
-[![Build Status](https://dev.azure.com/weatherballoon/Weather%20Balloon/_apis/build/status/weather-balloon.lib-py-parse-bom-stations?branchName=master)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_build/latest?definitionId=10&branchName=master)
+[![Build Status](https://dev.azure.com/weatherballoon/Weather%20Balloon/_apis/build/status/weather-balloon.lib-py-parse-bom-stations?branchName=master)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_build/latest?definitionId=10&branchName=master) [![parse-bom-stations package in wb-artifacts feed in Azure Artifacts](https://feeds.dev.azure.com/weatherballoon/_apis/public/Packaging/Feeds/695dd6ae-e885-4b93-bed5-0184d4f06a52/Packages/9c71e593-f9ac-40a9-8c16-977a15c14f4e/Badge)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_packaging?_a=package&feed=695dd6ae-e885-4b93-bed5-0184d4f06a52&package=9c71e593-f9ac-40a9-8c16-977a15c14f4e&preferRelease=true)
 
 Parses [weather stations published by the Bureau of Meteorology](ftp://ftp.bom.gov.au/anon2/home/ncc/metadata/sitelists/stations.zip).
+
+
+Using this very small library is easy:
+
+```
+import urllib.request
+from io import StringIO
+from parse_bom_stations import parse_station_list_to_json
+
+data_url = 'ftp://ftp.bom.gov.au/anon2/home/ncc/metadata/sitelists/stations.txt'
+
+with urllib.request.urlopen(data_url) as response:
+    bytes_data = response.read()
+
+station_data = StringIO(str(bytes_data, 'ascii'), newline="\r\n")
+
+print(parse_station_list_to_json(station_data))
+```
+
+## The data
+
+The weather station listing appears as:
 
 ```
 Bureau of Meteorology product IDCJMC0014.                                       Produced: 12 Jul 2019

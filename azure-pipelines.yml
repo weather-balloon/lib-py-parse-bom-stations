@@ -9,64 +9,69 @@ variables:
     publish_repo: wb-artifacts
     python_version: 3.6
 
-jobs:
-  - job: CommitTest
+stages:
+  - stage: CommitTest
     displayName: CI Commit Test
-    pool:
-        vmImage: 'ubuntu-16.04'
-    steps:
-      - task: UsePythonVersion@0
-        displayName: Set Python version to $(python_version)
-        inputs:
-            versionSpec: "$(python_version)"
+    jobs:
+      - job: 
+        pool:
+            vmImage: 'ubuntu-16.04'
+        steps:
+          - task: UsePythonVersion@0
+            displayName: Set Python version to $(python_version)
+            inputs:
+                versionSpec: "$(python_version)"
 
-      - task: CmdLine@2
-        displayName: Prepare virtualenv
-        inputs:
-            script: make init
+          - task: CmdLine@2
+            displayName: Prepare virtualenv
+            inputs:
+                script: make init
 
-      - task: CmdLine@2
-        displayName: Run tests
-        inputs:
-            script: make pre-commit
+          - task: CmdLine@2
+            displayName: Run tests
+            inputs:
+                script: make pre-commit
 
-      - task: PublishTestResults@2
-        displayName: Publish tests
-        condition: succeededOrFailed()
-        inputs:
-            testResultsFiles: "junit/test-*.xml"
-            testRunTitle: "Publish test results for Python $(python.version)"
+          - task: PublishTestResults@2
+            displayName: Publish tests
+            condition: succeededOrFailed()
+            inputs:
+                testResultsFiles: "junit/test-*.xml"
+                testRunTitle: "Publish test results for Python $(python.version)"
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-            path: $(dist_dir)
-            artifact: dist
+          - task: PublishPipelineArtifact@1
+            inputs:
+                path: $(dist_dir)
+                artifact: dist
 
-  - job: Publish
+  - stage: Publish
     displayName: Publish
-    dependsOn: CommitTest
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-            artifact: dist
+    jobs:
+      - job: Publish        
+        steps:
+          - checkout: none
+          
+          - task: DownloadPipelineArtifact@2
+            inputs:
+                artifact: dist
 
-      - task: UsePythonVersion@0
-        displayName: Set Python version to $(python_version)
-        inputs:
-            versionSpec: "$(python_version)"
+          - task: UsePythonVersion@0
+            displayName: Set Python version to $(python_version)
+            inputs:
+                versionSpec: "$(python_version)"
 
-      - task: CmdLine@2
-        displayName: Prepare virtualenv
-        inputs:
-            script: make init
+          - task: CmdLine@2
+            displayName: Prepare virtualenv
+            inputs:
+                script: make init
 
-      - task: TwineAuthenticate@0
-        displayName: Authenticate with $(publish_repo) repo
-        inputs:
-            artifactFeeds: $(publish_repo)
+          - task: TwineAuthenticate@0
+            displayName: Authenticate with $(publish_repo) repo
+            inputs:
+                artifactFeeds: $(publish_repo)
 
-      - task: CmdLine@2
-        displayName: Publish to $(publish_repo)
-        inputs:
-            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip
+          - task: CmdLine@2
+            displayName: Publish to $(publish_repo)
+            inputs:
+                script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip

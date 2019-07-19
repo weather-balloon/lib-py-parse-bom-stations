@@ -28,17 +28,34 @@ At the base of the data is a blank line followed by an informational footer.
 Please note Copyright, Disclaimer and Privacy Notice, accessible at <http://www.bom.gov.au/other/copyright.shtml>
 ```
 
-## Set up
+## Using the code
+
+Make sure you have the following software installed:
+
+- `make`
+- Python 3.6 or higher
+
+You can then run `make init` to setup [`pipenv`](https://docs.pipenv.org/) and
+install the required packages.
+
+Kick off the tests with `make test`. This will download the required data for testing
+(I don't include them here due to copyright reasons).
 
 You may notice a delay when you `git commit` - this is due to a commit hook (`.git/hooks/pre-commit`)
 that checks your code prior to allowing you to commit. You can skip this check if you really need to
 by using the `--no-verify` parameter with your `git commit`.
 
-If you need to skip the Azure Pipelines CI build, 
+If you need to skip the Azure Pipelines CI build, you can [use `[skip ci]`](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml#skipping-ci-for-individual-commits)
+in your commit message:
 
-   git commit -m '[skip ci] Pipeline work' --no-verify
+```
+git commit -m '[skip ci] Pipeline work' --no-verify
+```
 
-The 
+The release mechanism is made easy as the Azure Pipelines config will release tagged
+versions to Azure Artifacts:
 
-   git tag 0.1.7
-   git push --tags
+```
+git tag 0.1.7
+git push --tags
+```

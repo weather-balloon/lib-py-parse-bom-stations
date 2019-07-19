@@ -8,6 +8,7 @@ variables:
     dist_dir: .tox/dist
     publish_repo: wb-artifacts
     python_version: 3.6
+    PIPENV_CACHE_DIR: $(Pipeline.Workspace)/.pipenvcache
 
 stages:
   - stage: CommitTest
@@ -17,6 +18,15 @@ stages:
         pool:
             vmImage: 'ubuntu-16.04'
         steps:
+          - task: CacheBeta@0
+            displayName: Tox cache
+            inputs:
+              key: |
+                pipenv
+                $(Agent.OS)
+                $(Build.SourcesDirectory)/Pipfile.lock
+              path: $(PIPENV_CACHE_DIR)
+            
           - task: UsePythonVersion@0
             displayName: Set Python version to $(python_version)
             inputs:
@@ -51,7 +61,7 @@ stages:
       - job: Publish        
         steps:
           - checkout: none
-          
+
           - task: DownloadPipelineArtifact@2
             inputs:
                 artifact: dist

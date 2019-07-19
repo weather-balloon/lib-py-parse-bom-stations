@@ -35,7 +35,8 @@ fetch-data:
 test: fetch-data sync
 	pipenv run tox
 
-pre-commit: package
+pre-commit:
+	pipenv run tox
 
 package: clean lint test
 	pipenv run python setup.py sdist bdist_wheel

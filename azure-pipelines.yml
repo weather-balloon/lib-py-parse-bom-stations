@@ -33,7 +33,7 @@ jobs:
         displayName: Publish tests
         condition: succeededOrFailed()
         inputs:
-            testResultsFiles: "**/test-*.xml"
+            testResultsFiles: "junit/test-*.xml"
             testRunTitle: "Publish test results for Python $(python.version)"
 
   - job: Publish
@@ -48,7 +48,6 @@ jobs:
 
       - task: TwineAuthenticate@0
         displayName: Authenticate with $(publish_repo) repo
-        
         inputs:
             artifactFeeds: $(publish_repo)
 
@@ -56,4 +55,4 @@ jobs:
         displayName: Publish to $(publish_repo)
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
-            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) dist/*
+            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) .tox/dist/*

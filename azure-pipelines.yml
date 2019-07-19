@@ -5,8 +5,9 @@ trigger:
     - refs/tags/*
 
 variables:
-  publish_repo: wb-artifacts
-  python_version: 3.6
+    dist_dir: .tox/dist
+    publish_repo: wb-artifacts
+    python_version: 3.6
 
 jobs:
   - job: CommitTest
@@ -36,15 +37,19 @@ jobs:
             testResultsFiles: "junit/test-*.xml"
             testRunTitle: "Publish test results for Python $(python.version)"
 
+      - task: PublishPipelineArtifact@1
+        inputs:
+            path: $(dist_dir)
+            artifact: dist
+
   - job: Publish
     displayName: Publish
     dependsOn: CommitTest
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     steps:
-      - task: CmdLine@2
-        displayName: Package
+      - task: DownloadPipelineArtifact@2
         inputs:
-            script: make package
+            artifact: dist
 
       - task: TwineAuthenticate@0
         displayName: Authenticate with $(publish_repo) repo
@@ -55,4 +60,4 @@ jobs:
         displayName: Publish to $(publish_repo)
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
-            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) .tox/dist/*
+            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip

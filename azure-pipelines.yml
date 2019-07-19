@@ -4,44 +4,56 @@ trigger:
     - master
     - refs/tags/*
 
-pool:
-  vmImage: 'ubuntu-16.04'
-
 variables:
   publish_repo: wb-artifacts
   python_version: 3.6
 
-steps:
-  - task: UsePythonVersion@0
-    displayName: Set Python version to $(python_version)
-    inputs:
-        versionSpec: "$(python_version)"
+jobs:
+  - job: CommitTest
+    displayName: CI Commit Test
+    pool:
+        vmImage: 'ubuntu-16.04'
+    steps:
+      - task: UsePythonVersion@0
+        displayName: Set Python version to $(python_version)
+        inputs:
+            versionSpec: "$(python_version)"
 
-  - task: CmdLine@2
-    displayName: Prepare virtualenv
-    inputs:
-        script: make init
+      - task: CmdLine@2
+        displayName: Prepare virtualenv
+        inputs:
+            script: make init
 
-  - task: CmdLine@2
-    displayName: Run tests
-    inputs:
-        script: make test
+      - task: CmdLine@2
+        displayName: Run tests
+        inputs:
+            script: make test
 
-  - task: PublishTestResults@2
-    displayName: Publish tests
-    condition: succeededOrFailed()
-    inputs:
-        testResultsFiles: "**/test-*.xml"
-        testRunTitle: "Publish test results for Python $(python.version)"
+      - task: PublishTestResults@2
+        displayName: Publish tests
+        condition: succeededOrFailed()
+        inputs:
+            testResultsFiles: "**/test-*.xml"
+            testRunTitle: "Publish test results for Python $(python.version)"
 
-  - task: TwineAuthenticate@0
-    displayName: Authenticate with $(publish_repo) repo
+  - job: Publish
+    displayName: Publish
+    dependsOn: CommitTest
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    inputs:
-        artifactFeeds: $(publish_repo)
+    steps:
+      - task: CmdLine@2
+        displayName: Package
+        inputs:
+            script: make package
 
-  - task: CmdLine@2
-    displayName: Publish to $(publish_repo)
-    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    inputs:
-        script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) dist/*
+      - task: TwineAuthenticate@0
+        displayName: Authenticate with $(publish_repo) repo
+        
+        inputs:
+            artifactFeeds: $(publish_repo)
+
+      - task: CmdLine@2
+        displayName: Publish to $(publish_repo)
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+            script: pipenv run twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) dist/*

@@ -32,17 +32,14 @@ lint:
 fetch-data:
 	bin/fetch_bom_stations $(STATION_DOWNLOAD_FILE) $(STATION_OUT_FILE)
 
-test: fetch-data sync
+test: fetch-data sync lint
 	pipenv run tox
 
 pre-commit:
 	pipenv run tox
 
-package: clean lint test
+package: test
 	pipenv run python setup.py sdist bdist_wheel
-
-publish: package
-	pipenv run twine upload dist/*
 
 clean:
 	rm -rf build dist .egg .eggs *.egg-info pip-wheel-metadata

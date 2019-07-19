@@ -62,6 +62,15 @@ stages:
         steps:
           - checkout: none
 
+          - task: CacheBeta@0
+            displayName: Tox cache
+            inputs:
+              key: |
+                pipenv
+                $(Agent.OS)
+                $(Build.SourcesDirectory)/Pipfile.lock
+              path: $(PIPENV_CACHE_DIR)
+
           - task: DownloadPipelineArtifact@2
             inputs:
                 artifact: dist

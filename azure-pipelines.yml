@@ -75,8 +75,6 @@ stages:
                 artifact: dist
                 path: $(Pipeline.Workspace)/dist
 
-          - script: ls -laR $(Pipeline.Workspace)
-
           - task: UsePythonVersion@0
             displayName: Set Python version to $(python_version)
             inputs:

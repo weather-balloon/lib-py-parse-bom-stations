@@ -51,6 +51,11 @@ jobs:
         inputs:
             artifact: dist
 
+      - task: CmdLine@2
+        displayName: Install twine
+        inputs:
+            script: pip install --upgrade twine
+
       - task: TwineAuthenticate@0
         displayName: Authenticate with $(publish_repo) repo
         inputs:

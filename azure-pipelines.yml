@@ -1,28 +1,47 @@
+trigger:
+  branches:
+    include:
+    - master
+    - refs/tags/*
+
 pool:
   vmImage: 'ubuntu-16.04'
 
+variables:
+  publish_repo: wb-artifacts
+  python_version: 3.6
+
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.6'
+  - task: UsePythonVersion@0
+    displayName: Set Python version to $(python_version)
+    inputs:
+        versionSpec: "$(python_version)"
 
-# Would like to use this in the future and proxy through wb-artifacts for everything
-# - task: PipAuthenticate@0
-#  inputs:
-#    artifactFeeds: wb-artifacts
+  - task: CmdLine@2
+    displayName: Prepare virtualenv
+    inputs:
+        script: make init
 
-- script: make init
+  - task: CmdLine@2
+    displayName: Run tests
+    inputs:
+        script: make test
 
-- script: make test
+  - task: PublishTestResults@2
+    displayName: Publish tests
+    condition: succeededOrFailed()
+    inputs:
+        testResultsFiles: "**/test-*.xml"
+        testRunTitle: "Publish test results for Python $(python.version)"
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFiles: '**/test-*.xml'
-    testRunTitle: 'Publish test results for Python $(python.version)'
+  - task: TwineAuthenticate@0
+    displayName: Authenticate with $(publish_repo) repo
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+    inputs:
+        artifactFeeds: $(publish_repo)
 
-- task: TwineAuthenticate@0
-  inputs:
-    artifactFeeds: wb-artifacts
-
-- script: 'pipenv run twine -r wb-artifacts dist/*'
+  - task: CmdLine@2
+    displayName: Publish to $(publish_repo)
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+    inputs:
+        script: pipenv run twine -r $(publish_repo) dist/*

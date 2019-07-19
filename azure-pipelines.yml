@@ -60,7 +60,6 @@ stages:
     jobs:
       - job: Publish        
         steps:
-          - checkout: none
 
           - task: CacheBeta@0
             displayName: Cache
@@ -74,6 +73,7 @@ stages:
           - task: DownloadPipelineArtifact@2
             inputs:
                 artifact: dist
+                path: $(Pipeline.Workspace)/dist
 
           - script: ls -laR $(Pipeline.Workspace)
 

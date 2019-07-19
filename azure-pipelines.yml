@@ -19,7 +19,7 @@ stages:
             vmImage: 'ubuntu-16.04'
         steps:
           - task: CacheBeta@0
-            displayName: Tox cache
+            displayName: Cache
             inputs:
               key: |
                 pipenv
@@ -63,7 +63,7 @@ stages:
           - checkout: none
 
           - task: CacheBeta@0
-            displayName: Tox cache
+            displayName: Cache
             inputs:
               key: |
                 pipenv
@@ -74,6 +74,8 @@ stages:
           - task: DownloadPipelineArtifact@2
             inputs:
                 artifact: dist
+
+          - script: ls -laR $(Pipeline.Workspace)
 
           - task: UsePythonVersion@0
             displayName: Set Python version to $(python_version)

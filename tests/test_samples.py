@@ -13,6 +13,7 @@ SAMPLE_DATA = os.path.join(
 
 @pytest.fixture
 def station_data() -> List[WeatherStationTuple]:
+    """ Load the sample data into a list """
     return parse_station_list(SAMPLE_DATA)
 
 
@@ -22,6 +23,7 @@ def test_record_count(station_data: List[WeatherStationTuple]):
 
 
 def test_300055_site(station_data: List[WeatherStationTuple]):
+    """ Validate an entry """
     station = station_data[0]
     assert station.site == '300055'
     assert station.district == '300'

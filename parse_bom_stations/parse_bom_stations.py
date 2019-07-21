@@ -2,7 +2,7 @@
 
 import sys
 from pathlib import Path
-from typing import NamedTuple
+from typing import NamedTuple, List
 import pandas as pd
 
 
@@ -43,7 +43,7 @@ def _get_colspec(station_cols: str = COLSPEC):
     return station_col_specification
 
 
-def parse_station_list(filepath_or_buffer) -> pd.DataFrame:
+def _parse_station_list(filepath_or_buffer) -> pd.DataFrame:
     """Parses the fixed-width station listing
 
     :param filepath_or_buffer: stations file (stations.txt)
@@ -69,14 +69,21 @@ def parse_station_list(filepath_or_buffer) -> pd.DataFrame:
     return station_df
 
 
-def parse_station_list_to_json(filepath_or_buffer):
+def parse_station_list_to_json(filepath_or_buffer) -> str:
     """ Return JSON-formatted data """
-    return parse_station_list(filepath_or_buffer).to_json(orient="records")
+    return _parse_station_list(filepath_or_buffer).to_json(orient="records")
 
 
-def parse_station_list_to_csv(filepath_or_buffer):
+def parse_station_list_to_csv(filepath_or_buffer) -> str:
     """ Return CSV-formatted data """
-    return parse_station_list(filepath_or_buffer).to_csv()
+    return _parse_station_list(filepath_or_buffer).to_csv()
+
+
+def parse_station_list(filepath_or_buffer) -> List[WeatherStationTuple]:
+    """ Return Tuple list """
+    return list(_parse_station_list(filepath_or_buffer)
+                .itertuples(index=False,
+                            name='WeatherStationTuple'))
 
 
 def cli(args):

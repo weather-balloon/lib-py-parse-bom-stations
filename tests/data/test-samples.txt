@@ -1,0 +1,16 @@
+Bureau of Meteorology product IDCJMC0014.                                       Produced: 18 Jul 2019
+
+   Site  Dist  Site name                                 Start     End      Lat       Lon Source         STA Height (m)   Bar_ht    WMO
+------- ----- ---------------------------------------- ------- ------- -------- --------- -------------- --- ---------- -------- ------
+ 300055 300   DAVIS (WHOOP WHOOP)                         2007      .. -68.4723   78.8735 GPS            ANT      593.0    594.4  89570
+ 300060 300   CASEY SKIWAY SOUTH                          2008      .. -66.2803  110.7615 GPS            ANT      390.0    398.5  89809
+ 300061       BUNGER HILLS                                2015      .. -66.2510  100.6000 GPS            ANT       12.0     16.0  89817
+ 099022 99    LADY BARRON AERODROME                       1992    1996 -40.2028  148.2372 .....          TAS       11.2     11.4     ..
+ 097086 97    QUEENSTOWN (UPPER PRINCESS CREEK)           1995    1999 -42.0833  145.5286 .....          TAS      250.0       ..     ..
+ 001002 01    BEVERLEY SP                                 1959    1967 -16.5825  125.4828 .....          WA          ..       ..     ..
+
+19375 stations
+
+(c) Copyright Commonwealth of Australia 2019, Bureau of Meteorology (ABN 92 637 533 532) 
+Please note Copyright, Disclaimer and Privacy Notice, accessible at <http://www.bom.gov.au/other/copyright.shtml>
+

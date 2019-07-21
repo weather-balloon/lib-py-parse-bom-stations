@@ -104,7 +104,8 @@ venv.bak/
 .mypy_cache/
 
 
-data/
+tests/data/bomstations.txt
+tests/data/bomstations.zip
 .vscode
 junit/
 .env

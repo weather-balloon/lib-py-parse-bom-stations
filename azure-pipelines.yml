@@ -51,15 +51,6 @@ stages:
       - job: Publish
         steps:
 
-          - task: CacheBeta@0
-            displayName: Cache
-            inputs:
-              key: |
-                pipenv
-                $(Agent.OS)
-                $(Build.SourcesDirectory)/Pipfile.lock
-              path: $(PIPENV_CACHE_DIR)
-
           - task: DownloadPipelineArtifact@2
             inputs:
                 artifact: dist
@@ -75,10 +66,10 @@ stages:
             inputs:
                 script: make init
 
-          - task: TwineAuthenticate@0
+          - task: TwineAuthenticate@1
             displayName: Authenticate with $(publish_repo) repo
             inputs:
-                artifactFeeds: $(publish_repo)
+                artifactFeed: $(publish_repo)
 
           - task: CmdLine@2
             displayName: Publish to $(publish_repo)

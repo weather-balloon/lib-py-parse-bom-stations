@@ -36,17 +36,18 @@ package:
 	pipenv run python setup.py sdist bdist_wheel
 
 clean:
-	rm -rf build dist .egg .eggs *.egg-info pip-wheel-metadata
-	rm -rf htmlcov junit
-	rm -f coverage.xml
-	rm -f .coverage
+	-rm -rf build .egg .eggs *.egg-info pip-wheel-metadata
+	-rm -rf dist
+	-rm -rf htmlcov junit
+	-rm -f coverage.xml
+	-rm -f .coverage
 
 clean-test-data:
-	rm -f $(STATION_DOWNLOAD_FILE)
-	rm -f $(STATION_OUT_FILE)
-	rm -rf .pytest_cache
+	-rm -f $(STATION_DOWNLOAD_FILE)
+	-rm -f $(STATION_OUT_FILE)
+	-rm -rf .pytest_cache
 
 clean-tox:
-	rm -rf .tox
+	-rm -rf .tox
 
 clean-all: clean clean-test-data clean-tox

@@ -1,6 +1,6 @@
 # lib-py-parse-bom-stations
 
-[![Build Status](https://dev.azure.com/weatherballoon/Weather%20Balloon/_apis/build/status/weather-balloon.lib-py-parse-bom-stations?branchName=master)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_build/latest?definitionId=10&branchName=master) [![parse-bom-stations package in wb-artifacts feed in Azure Artifacts](https://feeds.dev.azure.com/weatherballoon/_apis/public/Packaging/Feeds/695dd6ae-e885-4b93-bed5-0184d4f06a52/Packages/9c71e593-f9ac-40a9-8c16-977a15c14f4e/Badge)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_packaging?_a=package&feed=695dd6ae-e885-4b93-bed5-0184d4f06a52&package=9c71e593-f9ac-40a9-8c16-977a15c14f4e&preferRelease=true)
+[![Build Status](https://dev.azure.com/weatherballoon/Weather%20Balloon/_apis/build/status/weather-balloon.lib-py-parse-bom-stations?branchName=master)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_build/latest?definitionId=10&branchName=master) [![parse-bom-stations package in wb-artifacts-public feed in Azure Artifacts](https://feeds.dev.azure.com/weatherballoon/0badd75d-c148-4127-ad1d-b019b1a52dd4/_apis/public/Packaging/Feeds/bdf5f432-cc50-4b9f-9e09-cc8501de6f0d/Packages/6b1dc553-23f2-4c30-aa31-65f5079368a4/Badge)](https://dev.azure.com/weatherballoon/Weather%20Balloon/_packaging?_a=package&feed=bdf5f432-cc50-4b9f-9e09-cc8501de6f0d&package=6b1dc553-23f2-4c30-aa31-65f5079368a4&preferRelease=true)
 
 Parses [weather stations published by the Bureau of Meteorology](ftp://ftp.bom.gov.au/anon2/home/ncc/metadata/sitelists/stations.zip).
 

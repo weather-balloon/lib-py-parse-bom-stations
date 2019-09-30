@@ -14,8 +14,9 @@ info:
 	echo $(STATION_OUT_FILE)
 
 init:
-	/usr/bin/env python3 -m pip install pipenv --upgrade
+	pip install pipenv --upgrade
 	pipenv install --dev
+	pipenv run pre-commit install
 
 check:
 	pipenv check
@@ -24,14 +25,14 @@ lint:
 	pipenv run pylint $(PACKAGE) tests bin
 
 fetch-data:
-	bin/fetch_bom_stations $(STATION_DOWNLOAD_FILE) $(STATION_OUT_FILE)
+	pipenv run python bin/fetch_bom_stations $(STATION_DOWNLOAD_FILE) $(STATION_OUT_FILE)
 
 test: fetch-data
 	pipenv run tox
 
-pre-commit: lint test	
+pre-commit: lint check test
 
-package: 
+package:
 	pipenv run python setup.py sdist bdist_wheel
 
 clean:

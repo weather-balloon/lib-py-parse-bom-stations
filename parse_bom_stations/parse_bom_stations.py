@@ -90,11 +90,11 @@ def cli(args):
     """ A very basic command line """
     if len(args) >= 2 and args[1] in ['-h', '--help']:
         print(f'Usage: {args[0]} INPUT_FILE [csv]')
-        exit(0)
+        sys.exit(0)
 
     if len(args) < 2:
         print('Expected parameter: path to input file')
-        exit(-1)
+        sys.exit(-1)
 
     input_file = Path(args[1])
 

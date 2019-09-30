@@ -13,6 +13,7 @@ pytest = "*"
 pytest-datafiles = "*"
 tox = "*"
 versioneer = "*"
+pre-commit = "*"
 
 [packages]
 pandas = ">=0.24"

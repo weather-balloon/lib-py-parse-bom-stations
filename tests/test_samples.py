@@ -13,8 +13,8 @@ SAMPLE_DATA = os.path.join(
 
 @pytest.fixture
 def station_data() -> List[WeatherStationTuple]:
+    """Provides the station listing data"""
     return parse_station_list(SAMPLE_DATA)
-
 
 def test_record_count(station_data: List[WeatherStationTuple]):
     """ Just used to check we load the correct number of records """
@@ -22,6 +22,7 @@ def test_record_count(station_data: List[WeatherStationTuple]):
 
 
 def test_300055_site(station_data: List[WeatherStationTuple]):
+    """Tests the 300055 site data"""
     station = station_data[0]
     assert station.site == '300055'
     assert station.district == '300'

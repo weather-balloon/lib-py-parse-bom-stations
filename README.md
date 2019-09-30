@@ -46,7 +46,7 @@ At the base of the data is a blank line followed by an informational footer.
 
 19375 stations
 
-(c) Copyright Commonwealth of Australia 2019, Bureau of Meteorology (ABN 92 637 533 532) 
+(c) Copyright Commonwealth of Australia 2019, Bureau of Meteorology (ABN 92 637 533 532)
 Please note Copyright, Disclaimer and Privacy Notice, accessible at <http://www.bom.gov.au/other/copyright.shtml>
 ```
 
@@ -55,7 +55,7 @@ Please note Copyright, Disclaimer and Privacy Notice, accessible at <http://www.
 Make sure you have the following software installed:
 
 - `make`
-- Python 3.6 or higher
+- Python 3.6 (Set as Azure Functions needs 3.6)
 
 You can then run `make init` to setup [`pipenv`](https://docs.pipenv.org/) and
 install the required packages.

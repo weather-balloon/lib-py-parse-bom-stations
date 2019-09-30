@@ -6,27 +6,17 @@ trigger:
 
 variables:
     dist_dir: .tox/dist
-    publish_repo: wb-artifacts
+    publish_repo: wb-artifacts-public
     python_version: 3.6
-    PIPENV_CACHE_DIR: $(Pipeline.Workspace)/.pipenvcache
 
 stages:
   - stage: CommitTest
     displayName: CI Commit Test
     jobs:
-      - job: 
+      - job:
         pool:
             vmImage: 'ubuntu-16.04'
         steps:
-          - task: CacheBeta@0
-            displayName: Cache
-            inputs:
-              key: |
-                pipenv
-                $(Agent.OS)
-                $(Build.SourcesDirectory)/Pipfile.lock
-              path: $(PIPENV_CACHE_DIR)
-            
           - task: UsePythonVersion@0
             displayName: Set Python version to $(python_version)
             inputs:
@@ -58,7 +48,7 @@ stages:
     displayName: Publish
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     jobs:
-      - job: Publish        
+      - job: Publish
         steps:
 
           - task: CacheBeta@0

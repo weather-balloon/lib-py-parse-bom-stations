@@ -6,7 +6,7 @@ trigger:
 
 variables:
     dist_dir: .tox/dist
-    publish_repo: wb-artifacts
+    publish_repo: wb-artifacts-public
     python_version: 3.6
 
 stages:

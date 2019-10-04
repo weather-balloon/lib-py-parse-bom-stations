@@ -6,7 +6,7 @@ trigger:
 
 variables:
     dist_dir: .tox/dist
-    publish_repo: wb-artifacts-public
+    publish_repo: 'Weather Balloon/wb-artifacts-public'
     python_version: 3.6
 
 stages:

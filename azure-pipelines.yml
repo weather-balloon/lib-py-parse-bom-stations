@@ -69,9 +69,9 @@ stages:
           - task: TwineAuthenticate@1
             displayName: Authenticate with $(publish_repo) repo
             inputs:
-                artifactFeed: $(publish_repo)
+                artifactFeed: '$(publish_repo)'
 
           - task: CmdLine@2
             displayName: Publish to $(publish_repo)
             inputs:
-                script: twine upload -r $(publish_repo) --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip
+                script: twine upload -r '$(publish_repo)' --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip

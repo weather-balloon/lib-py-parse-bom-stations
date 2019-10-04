@@ -6,7 +6,8 @@ trigger:
 
 variables:
     dist_dir: .tox/dist
-    publish_repo: 'Weather Balloon/wb-artifacts-public'
+    project_name: 'Weather Balloon'
+    publish_repo: 'wb-artifacts-public'
     python_version: 3.6
 
 stages:
@@ -69,7 +70,7 @@ stages:
           - task: TwineAuthenticate@1
             displayName: Authenticate with $(publish_repo) repo
             inputs:
-                artifactFeed: '$(publish_repo)'
+                artifactFeed: '$(project_name)/$(publish_repo)'
 
           - task: CmdLine@2
             displayName: Publish to $(publish_repo)

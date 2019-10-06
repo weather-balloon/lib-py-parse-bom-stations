@@ -56,8 +56,9 @@ Make sure you have the following software installed:
 
 - `make`
 - Python 3.6 (Set as Azure Functions needs 3.6)
+- [`pipenv`](https://pipenv.readthedocs.io/en/latest/)
 
-You can then run `make init` to setup [`pipenv`](https://docs.pipenv.org/) and
+You can then run `make init` to setup a virtual env and
 install the required packages.
 
 Kick off the tests with `make test`. This will download the required data for testing

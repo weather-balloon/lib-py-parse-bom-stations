@@ -5,7 +5,7 @@ trigger:
     - refs/tags/*
 
 variables:
-    dist_dir: .tox/dist
+    dist_dir: dist
     project_name: 'Weather Balloon'
     publish_repo: 'wb-artifacts-public'
     python_version: 3.6
@@ -41,6 +41,11 @@ stages:
             inputs:
                 testResultsFiles: "junit/test-*.xml"
                 testRunTitle: "Publish test results for Python $(python.version)"
+
+          - task: CmdLine@2
+            displayName: Package
+            inputs:
+                script: make package
 
           - task: PublishPipelineArtifact@1
             inputs:

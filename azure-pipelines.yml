@@ -75,4 +75,4 @@ stages:
           - task: CmdLine@2
             displayName: Publish to $(publish_repo)
             inputs:
-                script: twine upload -r '$(publish_repo)' --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*.zip
+                script: twine upload -r '$(publish_repo)' --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*

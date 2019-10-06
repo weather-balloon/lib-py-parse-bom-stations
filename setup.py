@@ -32,7 +32,7 @@ setup(
     url='https://github.com/weather-balloon/lib-py-parse-bom-stations',
     license=about['LICENCE'],
     packages=[about['NAME']],
-    python_requires='>=3.6',
+    python_requires='~=3.6',
     install_requires=install_requires,
     classifiers=about['CLASSIFIERS']
 )
